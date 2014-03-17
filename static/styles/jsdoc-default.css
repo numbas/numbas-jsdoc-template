@@ -9,7 +9,8 @@ body
     font: 14px "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 130%;
     color: #000;
-    background-color: #fff;
+    background-color: #acdeff;
+    margin: 0;
 }
 
 a {
@@ -40,7 +41,7 @@ header
 }
 
 #header {
-    margin: -8px -8px 8px -8px;
+    margin: 0px 0px 8px 0px;
     padding: 8px;
     background: #ddd;
     border-bottom: 1px solid #aaa;
@@ -49,16 +50,18 @@ header
 #main {
     float: left;
     width: 100%;
+    padding: 8px;
 }
 
 section
 {
     display: block;
-
     background-color: #fff;
     padding: 12px 24px;
-    border-bottom: 1px solid #ccc;
     margin-right: 240px;
+}
+section:not(:last-child) {
+    border-bottom: 1px solid #ccc;
 }
 section.readme {
 	border-bottom: none;
@@ -82,7 +85,7 @@ nav
     float: left;
     margin-left: -230px;
     margin-top: 28px;
-    width: 220px;
+    max-width: 220px;
     border-left: 1px solid #ccc;
     padding-left: 9px;
 }
@@ -141,7 +144,7 @@ h1
     font-size: 200%;
     font-weight: bold;
     letter-spacing: -0.01em;
-    margin: 6px 0 9px 0;
+    margin: 0.2em 0 0.5em 0;
 }
 
 h2
@@ -149,7 +152,7 @@ h2
     font-size: 170%;
     font-weight: bold;
     letter-spacing: -0.01em;
-    margin: 6px 0 3px 0;
+    margin: 0.5em 0 0.5em 0;
 }
 
 h3
@@ -158,7 +161,6 @@ h3
     font-weight: bold;
     letter-spacing: -0.01em;
     margin-top: 16px;
-    margin: 6px 0 3px 0;
 }
 
 h4
@@ -166,8 +168,6 @@ h4
     font-size: 130%;
     font-weight: bold;
     letter-spacing: -0.01em;
-    margin-top: 16px;
-    margin: 18px 0 3px 0;
     color: #A35A00;
 }
 
@@ -176,14 +176,12 @@ h5, .container-overview .subsection-title
     font-size: 120%;
     font-weight: bold;
     letter-spacing: -0.01em;
-    margin: 8px 0 3px -16px;
 }
 
 h6
 {
     font-size: 100%;
     letter-spacing: -0.01em;
-    margin: 6px 0 3px 0;
     font-style: italic;
 }
 
