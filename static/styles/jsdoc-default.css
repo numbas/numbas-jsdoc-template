@@ -28,7 +28,12 @@ a:active {
 header
 {
     display: block;
-    padding: 6px 4px;
+    padding: 0.5em 0;
+}
+
+section header h3 {
+	font-size: 1.8em;
+	margin: 0;
 }
 
 .class-description {
@@ -59,6 +64,7 @@ section
     background-color: #fff;
     padding: 12px 24px;
     margin-right: 240px;
+    border-radius: 2px;
 }
 section:not(:last-child) {
     border-bottom: 1px solid #ccc;
@@ -82,12 +88,15 @@ section.readme {
 nav
 {
     display: block;
-    float: left;
-    margin-left: -230px;
-    margin-top: 28px;
+    float: right;
+    margin-top: 46px;
+    /* border-left: 1px solid #ccc; */
+    background-color: #eee;
+    margin-left: -238px;
     max-width: 220px;
-    border-left: 1px solid #ccc;
-    padding-left: 9px;
+    margin-right: 8px;
+    padding: 0em 1em 1em 1em;
+    border-radius: 2px;
 }
 
 nav ul {
