@@ -118,6 +118,7 @@ nav
 }
 .toc-section {
 	float: left;
+	margin-bottom: 1em;
 }
 .toc-section:not(:last-child) {
 	margin-right: 3em;
@@ -209,6 +210,7 @@ h5, .container-overview .subsection-title
     font-size: 120%;
     font-weight: bold;
     letter-spacing: -0.01em;
+	margin: 1em 0;
 }
 
 h6
@@ -241,6 +243,8 @@ h6
 
 .name, .signature {
     font-family: Consolas, "Lucida Console", Monaco, monospace;
+	line-height: 1.5em;
+	margin: 0;
 }
 
 .details { margin-top: 14px; border-left: 2px solid #DDD; }
@@ -379,4 +383,21 @@ h6
 
 .disabled {
     color: #454545;
+}
+
+@media screen and (max-width: 700px) {
+	section {
+		margin-right: 2px;
+	}
+
+	nav {
+		max-width: 220px;
+	}
+
+	.main-nav {
+		margin-top: 0;
+		float: left;
+		margin-left: 8px;
+		margin-right: 8px;
+	}
 }

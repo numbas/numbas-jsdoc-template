@@ -103,7 +103,7 @@
 				<h4 class="subsection-title">Classes</h4>
 
 				<dl><?js classes.forEach(function(c) { ?>
-					<dt><?js= self.linkto(c.longname, c.name) ?></dt>
+					<dt class="name"><?js= self.linkto(c.longname, c.name) ?></dt>
 					<dd><?js if (c.summary) { ?><?js= c.summary ?><?js } ?></dd>
 				<?js }); ?></dl>
 			</div>
@@ -116,7 +116,7 @@
 				<h4 class="subsection-title">Namespaces</h4>
 
 				<dl><?js namespaces.forEach(function(n) { ?>
-					<dt><a href="namespaces.html#<?js= n.longname ?>"><?js= self.linkto(n.longname, n.name) ?></a></dt>
+					<dt class="name"><a href="namespaces.html#<?js= n.longname ?>"><?js= self.linkto(n.longname, n.name) ?></a></dt>
 					<dd><?js if (n.summary) { ?><?js= n.summary ?><?js } ?></dd>
 				<?js }); ?></dl>
 			</div>
@@ -127,7 +127,7 @@
 				<h4>Members</h4>
 				<ul>
 				<?js members.forEach(function(m) { ?>
-					<li><?js= self.linkto(m.longname, m.name) ?></li>
+					<li class="name"><?js= self.linkto(m.longname, m.name) ?></li>
 				<?js }); ?>
 				</ul>
 			</div>
@@ -138,7 +138,7 @@
 				<h4>Methods</h4>
 				<ul>
 				<?js methods.forEach(function(m) { ?>
-					<li><?js= self.linkto(m.longname, m.name) ?></li>
+					<li class="name"><?js= self.linkto(m.longname, m.name) ?></li>
 				<?js }); ?>
 				</ul>
 			</div>
@@ -149,7 +149,7 @@
 				<h4>Typedefs</h4>
 				<ul>
 				<?js typedefs.forEach(function(t) { ?>
-					<li><?js= self.linkto(t.longname, t.name) ?></li>
+					<li class="name"><?js= self.linkto(t.longname, t.name) ?></li>
 				<?js }); ?>
 				</ul>
 			</div>
@@ -160,7 +160,7 @@
 				<h4>Events</h4>
 				<ul>
 				<?js events.forEach(function(e) { ?>
-					<li><?js= self.linkto(e.longname, e.name) ?></li>
+					<li class="name"><?js= self.linkto(e.longname, e.name) ?></li>
 				<?js }); ?>
 				</ul>
 			</div>
