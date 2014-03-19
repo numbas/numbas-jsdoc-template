@@ -74,31 +74,102 @@
 
     <?js
         var classes = self.find({kind: 'class', memberof: doc.longname});
-        if (doc.kind !== 'globalobj' && classes && classes.length) {
-    ?>
-        <h3 class="subsection-title">Classes</h3>
+		var showClasses = doc.kind !== 'globalobj' && classes && classes.length;
 
-        <dl><?js classes.forEach(function(c) { ?>
-            <dt><?js= self.linkto(c.longname, c.name) ?></dt>
-            <dd><?js if (c.summary) { ?><?js= c.summary ?><?js } ?></dd>
-        <?js }); ?></dl>
-    <?js } ?>
-
-    <?js
         var namespaces = self.find({kind: 'namespace', memberof: doc.longname});
-        if (doc.kind !== 'globalobj' && namespaces && namespaces.length) {
-    ?>
-        <h3 class="subsection-title">Namespaces</h3>
+		var showNamespaces = doc.kind !== 'globalobj' && namespaces && namespaces.length;
 
-        <dl><?js namespaces.forEach(function(n) { ?>
-            <dt><a href="namespaces.html#<?js= n.longname ?>"><?js= self.linkto(n.longname, n.name) ?></a></dt>
-            <dd><?js if (n.summary) { ?><?js= n.summary ?><?js } ?></dd>
-        <?js }); ?></dl>
-    <?js } ?>
+        var members = self.find({kind: 'member', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
+		var showMembers = members && members.length && members.forEach;
+
+        var methods = self.find({kind: 'function', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
+		var showMethods = methods && methods.length && methods.forEach;
+
+        var typedefs = self.find({kind: 'typedef', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
+		var showTypedefs = typedefs && typedefs.length && typedefs.forEach;
+        
+		var events = self.find({kind: 'event', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
+		var showEvents = events && events.length && events.forEach;
+	?>
+
+
+	<?js if( showClasses || showNamespaces || showMembers || showMethods || showTypedefs || showEvents) { ?>
+	<nav class="toc">
+		<h3>Table of contents</h3>
+		<?js
+			if (showClasses) {
+		?>
+			<div class="toc-section">
+				<h4 class="subsection-title">Classes</h4>
+
+				<dl><?js classes.forEach(function(c) { ?>
+					<dt><?js= self.linkto(c.longname, c.name) ?></dt>
+					<dd><?js if (c.summary) { ?><?js= c.summary ?><?js } ?></dd>
+				<?js }); ?></dl>
+			</div>
+		<?js } ?>
+
+		<?js
+			if (showNamespaces) {
+		?>
+			<div class="toc-section">
+				<h4 class="subsection-title">Namespaces</h4>
+
+				<dl><?js namespaces.forEach(function(n) { ?>
+					<dt><a href="namespaces.html#<?js= n.longname ?>"><?js= self.linkto(n.longname, n.name) ?></a></dt>
+					<dd><?js if (n.summary) { ?><?js= n.summary ?><?js } ?></dd>
+				<?js }); ?></dl>
+			</div>
+		<?js } ?>
+
+		<?js if(showMembers) { ?>
+			<div class="toc-section">
+				<h4>Members</h4>
+				<ul>
+				<?js members.forEach(function(m) { ?>
+					<li><?js= self.linkto(m.longname, m.name) ?></li>
+				<?js }); ?>
+				</ul>
+			</div>
+		<?js } ?>
+
+		<?js if(showMethods) { ?>
+			<div class="toc-section">
+				<h4>Methods</h4>
+				<ul>
+				<?js methods.forEach(function(m) { ?>
+					<li><?js= self.linkto(m.longname, m.name) ?></li>
+				<?js }); ?>
+				</ul>
+			</div>
+		<?js } ?>
+
+		<?js if(showTypedefs) { ?>
+			<div class="toc-section">
+				<h4>Typedefs</h4>
+				<ul>
+				<?js typedefs.forEach(function(t) { ?>
+					<li><?js= self.linkto(t.longname, t.name) ?></li>
+				<?js }); ?>
+				</ul>
+			</div>
+		<?js } ?>
+
+		<?js if(showEvents) { ?>
+			<div class="toc-section">
+				<h4>Events</h4>
+				<ul>
+				<?js events.forEach(function(e) { ?>
+					<li><?js= self.linkto(e.longname, e.name) ?></li>
+				<?js }); ?>
+				</ul>
+			</div>
+		<?js } ?>
+	</nav>
+	<?js } ?>
 
     <?js
-        var members = self.find({kind: 'member', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
-        if (members && members.length && members.forEach) {
+        if (showMembers) {
     ?>
         <h3 class="subsection-title">Members</h3>
 
@@ -108,8 +179,7 @@
     <?js } ?>
 
     <?js
-        var methods = self.find({kind: 'function', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
-        if (methods && methods.length && methods.forEach) {
+        if (showMethods) {
     ?>
         <h3 class="subsection-title">Methods</h3>
 
@@ -119,8 +189,7 @@
     <?js } ?>
 
     <?js
-        var typedefs = self.find({kind: 'typedef', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
-        if (typedefs && typedefs.length && typedefs.forEach) {
+        if (showTypedefs) {
     ?>
         <h3 class="subsection-title">Type Definitions</h3>
 
@@ -139,8 +208,7 @@
     <?js } ?>
 
     <?js
-        var events = self.find({kind: 'event', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
-        if (events && events.length && events.forEach) {
+        if (showEvents) {
     ?>
         <h3 class="subsection-title">Events</h3>
 
