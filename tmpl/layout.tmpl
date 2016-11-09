@@ -39,5 +39,33 @@
 
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
+
+<script>
+var search_input = document.getElementById('search-query');
+var search_results = document.getElementById('search-results');
+function search() {
+	var query = search_input.value.toLowerCase().trim();
+	var lis = search_results.querySelectorAll('li');
+	var matches = 0;
+	var MATCH_LIMIT = Infinity;
+	for(var i=0;i<lis.length;i++) {
+		var li = lis[i];
+		var longname = li.getAttribute('data-longname').toLowerCase();
+		var match = matches<MATCH_LIMIT && query && longname.indexOf(query)!==-1;
+		matches += match;
+		li.classList.toggle('match',match);
+	}
+}
+search_input.addEventListener('input',search);
+search();
+
+if(window.location.hash) {
+	var elem = document.getElementById(window.location.hash.slice(1));
+	if(elem) {
+		elem.classList.add('opened-anchor');
+	}
+}
+
+</script>
 </body>
 </html>

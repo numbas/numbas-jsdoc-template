@@ -354,6 +354,11 @@ function buildNav(members) {
     var seen = {};
     var seenTutorials = {};
 
+	// make search directory
+	var search_index = Object.keys(helper.longnameToUrl).filter(function(l){return l.indexOf('~')==-1}).map(function(l){return [l,helper.longnameToUrl[l]]});
+
+	nav += view.partial('search.tmpl',{search_index: search_index});
+
     nav += buildMemberNav(members.modules, 'Modules', {}, linkto);
     nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal);
     nav += buildMemberNav(members.classes, 'Classes', seen, linkto);
