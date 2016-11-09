@@ -588,8 +588,8 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     generate('Numbas API documentation',
         packages.concat(
-            [{kind: 'mainpage', readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]
-        ).concat(files),
+            [{kind: 'mainpage', files: files, readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]
+		),
     indexUrl);
 
     // set up the lists that we'll use to generate pages

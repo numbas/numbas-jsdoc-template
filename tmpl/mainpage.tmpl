@@ -11,4 +11,9 @@ var self = this;
     <section class="readme">
         <article><?js= data.readme ?></article>
     </section>
+
+	<section class="files">
+		<h2>Files</h2>
+		<?js= self.partial('file.tmpl',data) ?>
+	</section>
 <?js } ?>

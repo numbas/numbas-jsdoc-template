@@ -1,0 +1,53 @@
+<?js
+    var self = this;
+    files.forEach(function(doc, i) {
+?>
+
+<div class="item file">
+    <h3><?js= doc.name ?></h3>
+
+    <div class="container-overview">
+		<?js if (doc.kind === 'module' && doc.modules) { ?>
+			<?js if (doc.description) { ?>
+				<div class="description"><?js= doc.description ?></div>
+			<?js } ?>
+
+			<?js doc.modules.forEach(function(module) { ?>
+				<?js= self.partial('method.tmpl', module) ?>
+			<?js }) ?>
+		<?js } else if (doc.kind === 'class') { ?>
+			<?js= self.partial('method.tmpl', doc) ?>
+		<?js } else { ?>
+			<?js if (doc.description) { ?>
+				<div class="description"><?js= doc.description ?></div>
+			<?js } ?>
+
+			<?js= self.partial('details.tmpl', doc) ?>
+
+			<?js if (doc.examples && doc.examples.length) { ?>
+				<h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
+				<?js= self.partial('examples.tmpl', doc.examples) ?>
+			<?js } ?>
+		<?js } ?>
+    </div>
+
+    <?js if (doc.augments && doc.augments.length) { ?>
+		<div class="subsection">
+        <h3 class="subsection-title">Extends</h3>
+
+        <?js= self.partial('augments.tmpl', doc) ?>
+		</div>
+    <?js } ?>
+
+    <?js if (doc.requires && doc.requires.length) { ?>
+		<div class="subsection">
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul><?js doc.requires.forEach(function(r) { ?>
+            <li><?js= self.linkto(r, r) ?></li>
+        <?js }); ?></ul>
+		</div>
+    <?js } ?>
+</div>
+
+<?js }); ?>
