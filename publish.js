@@ -575,6 +575,10 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.tutoriallink = tutoriallink;
     view.htmlsafe = htmlsafe;
     view.outputSourceFiles = outputSourceFiles;
+    view.githubRoot = env.conf.githubRoot;
+    view.githubLink = function(file,line) {
+        return '<a href="'+view.githubRoot+'/blob/master/'+file+'#L'+line+'">'+file+', line '+line+'</a>';
+    }
 
     // once for all
     view.nav = buildNav(members);
