@@ -9,6 +9,7 @@ var path = require('jsdoc/path');
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
+var catharsis = require('catharsis');
 
 var htmlsafe = helper.htmlsafe;
 var linkto = helper.linkto;
@@ -569,8 +570,63 @@ exports.publish = function(taffyData, opts, tutorials) {
         false;
 
     // add template helpers
+    var seen_longnames = {}
     view.find = find;
-    view.linkto = linkto;
+
+    var typedocs = {
+        "Number": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+        "String": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+        "RegExp": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+        "Date": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+        "Element": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+        "observable": "http://knockoutjs.com/documentation/observables.html",
+        "jQuery": "http://api.jquery.com/Types/#jQuery",
+        "Error": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+        "Boolean": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+        "Array": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+        "function": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+        "XMLDocument": "https://developer.mozilla.org/en/docs/Web/API/XMLDocument",
+        "Object": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"
+    }
+    Object.keys(typedocs).forEach(function(k) {
+        helper.longnameToUrl[k] = typedocs[k];
+    });
+    function extract_types_used(ptype) {
+        switch(ptype.type) {
+            case 'NameExpression':
+                return [ptype.name];
+            case 'TypeApplication':
+                var l = extract_types_used(ptype.expression);
+                ptype.applications.forEach(function(p2) {
+                    l = l.concat(extract_types_used(p2));
+                });
+                return l;
+            case 'FunctionType':
+                return ['function'];
+            case 'TypeUnion':
+                var l = [];
+                ptype.elements.forEach(function(p2) {
+                    l = l.concat(extract_types_used(p2));
+                });
+                return l;
+        }
+    }
+    view.linkto = function(doclet) {
+        var type = arguments[0];
+        try {
+            var ptype = catharsis.parse(type,{jsdoc:true});
+            var types_used = extract_types_used(ptype);
+            types_used.forEach(function(type) {
+                var url = helper.longnameToUrl[type];
+                if(url===undefined && !seen_longnames[type]) {
+                    console.warn("Undocumented type: "+type);
+                    seen_longnames[args[0]] = true;
+                }
+            });
+        } catch(e) {
+        }
+        return linkto.apply(this,arguments);
+    };
     view.resolveAuthorLinks = resolveAuthorLinks;
     view.tutoriallink = tutoriallink;
     view.htmlsafe = htmlsafe;
