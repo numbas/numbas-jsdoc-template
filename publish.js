@@ -328,6 +328,51 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
     return nav;
 }
 
+function buildNestedNav(items, itemHeading, itemsSeen, linktoFn) {
+    var nav = '';
+
+    if (items.length) {
+        var itemsNav = '';
+
+        function display_name_for(item) {
+            var displayName;
+            if (env.conf.templates.default.useLongnameInNav) {
+                displayName = item.longname;
+            } else {
+                displayName = item.name;
+            }
+            displayName = displayName.replace(/\b(module|event):/g, '');
+            if(item.memberof) {
+                displayName = item.memberof+'.'+displayName;
+            }
+            return displayName;
+        }
+
+		items.sort(function (a,b) {
+			a = display_name_for(a).toLowerCase();
+			b = display_name_for(b).toLowerCase();
+			return a>b ? 1 : a<b ? -1 : 0;
+		});
+
+        items.forEach(function(item) {
+            if ( !hasOwnProp.call(item, 'longname') ) {
+                itemsNav += '<li>' + linktoFn('', item.name) + '</li>';
+            }
+            else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
+                itemsNav += '<li>' + linktoFn(item.longname, display_name_for(item)) + '</li>';
+
+                itemsSeen[item.longname] = true;
+            }
+        });
+
+        if (itemsNav !== '') {
+            nav += '<div class="main-nav-item"><h3>' + itemHeading + '</h3><ul>' + itemsNav + '</ul></div>';
+        }
+    }
+
+    return nav;
+}
+
 function linktoTutorial(longName, name) {
     return tutoriallink(name);
 }
@@ -364,7 +409,7 @@ function buildNav(members) {
     nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal);
     nav += buildMemberNav(members.classes, 'Classes', seen, linkto);
     nav += buildMemberNav(members.events, 'Events', seen, linkto);
-    nav += buildMemberNav(members.namespaces, 'Namespaces', seen, linkto);
+    nav += buildNestedNav(members.namespaces, 'Namespaces', seen, linkto);
     nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto);
     nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial);
     nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto);
@@ -620,7 +665,7 @@ exports.publish = function(taffyData, opts, tutorials) {
                 var url = helper.longnameToUrl[type];
                 if(url===undefined && !seen_longnames[type]) {
                     console.warn("Undocumented type: "+type);
-                    seen_longnames[args[0]] = true;
+                    seen_longnames[type] = true;
                 }
             });
         } catch(e) {
