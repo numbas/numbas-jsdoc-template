@@ -118,19 +118,6 @@
 		<h3>Table of contents</h3>
 		<div class="toc-sections">
 			<?js
-				if (showClasses) {
-			?>
-				<div class="toc-section">
-					<h4 class="subsection-title">Classes</h4>
-
-					<dl><?js classes.forEach(function(c) { ?>
-						<dt class="name"><?js= self.linkto(c.longname, c.name) ?></dt>
-						<dd><?js if (c.summary) { ?><?js= c.summary ?><?js } ?></dd>
-					<?js }); ?></dl>
-				</div>
-			<?js } ?>
-
-			<?js
 				if (showNamespaces) {
 			?>
 				<div class="toc-section">
@@ -139,6 +126,19 @@
 					<dl><?js namespaces.forEach(function(n) { ?>
 						<dt class="name"><a href="namespaces.html#<?js= n.longname ?>"><?js= self.linkto(n.longname, n.name) ?></a></dt>
 						<dd><?js if (n.summary) { ?><?js= n.summary ?><?js } ?></dd>
+					<?js }); ?></dl>
+				</div>
+			<?js } ?>
+
+			<?js
+				if (showClasses) {
+			?>
+				<div class="toc-section">
+					<h4 class="subsection-title">Classes</h4>
+
+					<dl><?js classes.forEach(function(c) { ?>
+						<dt class="name"><?js= self.linkto(c.longname, c.name) ?></dt>
+						<dd><?js if (c.summary) { ?><?js= c.summary ?><?js } ?></dd>
 					<?js }); ?></dl>
 				</div>
 			<?js } ?>
