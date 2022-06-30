@@ -635,6 +635,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     }
     Object.keys(typedocs).forEach(function(k) {
         helper.longnameToUrl[k] = typedocs[k];
+        helper.longnameToUrl[k.toLowerCase()] = typedocs[k];
     });
     function extract_types_used(ptype) {
         switch(ptype.type) {
